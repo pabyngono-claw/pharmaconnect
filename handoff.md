@@ -50,7 +50,7 @@ Every work item uses this shape:
 | ID | Title | Owner | State | Branch | Acceptance | Merge Gate |
 |-----|-------|-------|-------|--------|------------|-----------|
 | PC-01 | Define design tokens and component-color status mapping | designer | merged | design/tokens-2026 | Color map complete, no emoji rule validated, skeleton layouts approved | `/design-review` passes, contrast >= 4.5:1 |
-| PC-02 | Lock 21-table schema in Xano | eng-manager | running | eng/xano-schema-v2 | All 21 tables created, indexes valid, TVA server-side rule enforced | `/plan-eng-review` + API contract dry-run |
+| PC-02 | Lock 21-table schema in Xano | eng-manager | merged | eng/xano-schema-v2 | All 21 tables created, indexes valid, TVA server-side rule enforced | `/plan-eng-review` + API contract dry-run |
 | PC-03 | Implement reservation state machine | backend | running | eng/reservation-state-machine | SUBMITTED/READY terminal states enforced, illegal transition returns 422 | `/qa` TC-04 through TC-06 pass |
 | PC-04 | Build patient request + pharmacy selection screen | frontend-lead | ready | frontend/request-flow | Accessibility targets >= 48x48dp, offline behavior defined, loading skeleton matches real row | `/plan-design-review` >= 8/10, `/qa` TC-01/03 pass |
 | PC-05 | Implement OTP + OAuth custom auth | backend | ready | eng/custom-auth | OTP hashed, 5-min expiry, 3-per-phone-10-min rate limit, refresh tokens rotated | `/cso` auth audit, `/investigate` on lockout scenarios |
