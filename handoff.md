@@ -49,16 +49,16 @@ Every work item uses this shape:
 
 | ID | Title | Owner | State | Branch | Acceptance | Merge Gate |
 |-----|-------|-------|-------|--------|------------|-----------|
-| PC-01 | Define design tokens and component-color status mapping | designer | backlog | design/tokens-2026 | Color map complete, no emoji rule validated, skeleton layouts approved | `/design-review` passes, contrast >= 4.5:1 |
-| PC-02 | Lock 21-table schema in Xano | eng-manager | backlog | eng/xano-schema-v2 | All 21 tables created, indexes valid, TVA server-side rule enforced | `/plan-eng-review` + API contract dry-run |
-| PC-03 | Implement reservation state machine | backend | backlog | eng/reservation-state-machine | SUBMITTED/READY terminal states enforced, illegal transition returns 422 | `/qa` TC-04 through TC-06 pass |
-| PC-04 | Build patient request + pharmacy selection screen | frontend-lead | backlog | frontend/request-flow | Accessibility targets >= 48x48dp, offline behavior defined, loading skeleton matches real row | `/plan-design-review` >= 8/10, `/qa` TC-01/03 pass |
-| PC-05 | Implement OTP + OAuth custom auth | backend | backlog | eng/custom-auth | OTP hashed, 5-min expiry, 3-per-phone-10-min rate limit, refresh tokens rotated | `/cso` auth audit, `/investigate` on lockout scenarios |
-| PC-06 | Payment webhook idempotency (Orange Money + Wave) | backend | backlog | eng/payment-idempotency | provider_transaction_id unique, replay returns existing record, no duplicate charges | `/cso` payment audit, `/qa` TC-09 pass |
-| PC-07 | Admin approval workflow for pharmacies | frontend-lead | backlog | frontend/admin-approval | Document tiles, per-document approve/reject, resubmit only rejected docs | `/qa` TC-07 pass |
-| PC-08 | QA regression pack | qa-lead | backlog | qa/regression-pack | TC-01 through TC-12 executable, browser evidence for each, before/after screenshots | `/qa` full pass |
-| PC-09 | Release Cloudflare Workers + CI pipeline | release-engineer | backlog | release/cf-workers-ci | Environment config, rollback plan, health check endpoint | `/ship` + `/land-and-deploy` |
-| PC-10 | Document release runbook | docs-lead | backlog | docs/release-runbook | API docs, onboarding, changelog, admin runbooks aligned with shipped schema | `/document-release` |
+| PC-01 | Define design tokens and component-color status mapping | designer | merged | design/tokens-2026 | Color map complete, no emoji rule validated, skeleton layouts approved | `/design-review` passes, contrast >= 4.5:1 |
+| PC-02 | Lock 21-table schema in Xano | eng-manager | running | eng/xano-schema-v2 | All 21 tables created, indexes valid, TVA server-side rule enforced | `/plan-eng-review` + API contract dry-run |
+| PC-03 | Implement reservation state machine | backend | running | eng/reservation-state-machine | SUBMITTED/READY terminal states enforced, illegal transition returns 422 | `/qa` TC-04 through TC-06 pass |
+| PC-04 | Build patient request + pharmacy selection screen | frontend-lead | ready | frontend/request-flow | Accessibility targets >= 48x48dp, offline behavior defined, loading skeleton matches real row | `/plan-design-review` >= 8/10, `/qa` TC-01/03 pass |
+| PC-05 | Implement OTP + OAuth custom auth | backend | ready | eng/custom-auth | OTP hashed, 5-min expiry, 3-per-phone-10-min rate limit, refresh tokens rotated | `/cso` auth audit, `/investigate` on lockout scenarios |
+| PC-06 | Payment webhook idempotency (Orange Money + Wave) | backend | ready | eng/payment-idempotency | provider_transaction_id unique, replay returns existing record, no duplicate charges | `/cso` payment audit, `/qa` TC-09 pass |
+| PC-07 | Admin approval workflow for pharmacies | frontend-lead | ready | frontend/admin-approval | Document tiles, per-document approve/reject, resubmit only rejected docs | `/qa` TC-07 pass |
+| PC-08 | QA regression pack | qa-lead | ready | qa/regression-pack | TC-01 through TC-12 executable, browser evidence for each, before/after screenshots | `/qa` full pass |
+| PC-09 | Release Cloudflare Workers + CI pipeline | release-engineer | ready | release/cf-workers-ci | Environment config, rollback plan, health check endpoint | `/ship` + `/land-and-deploy` |
+| PC-10 | Document release runbook | docs-lead | ready | docs/release-runbook | API docs, onboarding, changelog, admin runbooks aligned with shipped schema | `/document-release` |
 
 ## Handoff Artifact Requirements
 
