@@ -1,0 +1,14 @@
+# .gitignore
+
+node_modules/
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+.env
+coverage/
+.secrets/
+dist/
+build/
+*.local
