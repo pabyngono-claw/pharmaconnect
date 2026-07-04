@@ -21,6 +21,9 @@ Board
 - PC-B2 Xano scheduled tasks and function stubs
 - PC-B3 FlutterFlow implementation guide and routing
 - PC-B4 Admin approval implementation guide
+- PC-B5 Cloudflare Worker starter template
+- PC-B6 Environment/secrets checklist and deployment policy
+- PC-B7 QA automation plan and evidence structure
 
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
