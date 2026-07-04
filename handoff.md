@@ -19,6 +19,8 @@ Board
 - PC-09 Cloudflare Workers + CI
 - PC-B1 Xano import manifest and API snapshot
 - PC-B2 Xano scheduled tasks and function stubs
+- PC-B3 FlutterFlow implementation guide and routing
+- PC-B4 Admin approval implementation guide
 
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
