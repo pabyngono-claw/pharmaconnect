@@ -378,17 +378,29 @@ Input schema:
 - provider_transaction_id: string
 - status: string
 - amount?: decimal
+- currency?: string, default XOF
 - raw?: jsonb
+- subscription_id?: string
 
 Output schema:
 - transaction_id: string
 - status: string
 
+Validation:
+- Reject 400 if provider_transaction_id missing or provider unknown
+- Reject 401 or 403 if provider signature check fails
+- Reject 400 if status mapping fails
+
 Business logic:
-- Upsert payment_transactions by provider_transaction_id.
-- Map provider status to internal status.
-- Recreate or attach subscription if provided in payload.
-- Idempotent return.
+1. Map status: succeeded|success -> succeeded; failed|fail -> failed; refunded|refund -> refunded; authorized|pending -> authorized; else pending.
+2. Upsert into payment_transactions using provider_transaction_id unique key.
+   - On insert: populate amount, currency default 'XOF', raw_payload.
+   - On update: do not downgrade terminal statuses succeeded/refunded/failed unless explicit reconciliation event; append previous status to audit_logs.
+3. subscription_id handling:
+   - If provided in payload or derivable: link to payment_transaction.subscription_id.
+   - On status = succeeded: activate or extend subscription per plan mapping.
+4. Return the transaction_id and normalized status.
+5. Always append audit_log entry with actor_user_id = provider Webhook system user if exists; else system.
 
 ---
 
