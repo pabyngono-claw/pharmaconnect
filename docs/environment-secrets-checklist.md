@@ -3,10 +3,10 @@
 ## Required Before First Deploy
 
 ### Xano
-- [ ] Xano workspace created
-- [ ] Xano API URL recorded
-- [ ] Xano API token for backend-to-backend calls
-- [ ] Xano file storage region selected
+- [x] Xano workspace created
+- [x] Xano API URL recorded
+- [x] Xano API token for backend-to-backend calls
+- [x] Xano file storage region selected
 - [ ] Custom auth enabled in Xano app settings
 - [ ] Email/SMS provider configured in Xano (for OTP)
 - [ ] Database created with all 21 tables per import-manifest.md
@@ -30,9 +30,9 @@
 - [ ] Permission handler enabled (camera, storage, notifications, location)
 
 ### Cloudflare
-- [ ] Cloudflare account created
-- [ ] API token created with Workers + DNS edit permissions
-- [ ] Account ID noted
+- [x] Cloudflare account created
+- [x] API token created with Workers + DNS edit permissions
+- [x] Account ID noted
 - [ ] KV namespace created for static assets cache
 - [ ] Worker site bucket configured
 - [ ] Custom domain attached to Worker route

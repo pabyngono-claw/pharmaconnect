@@ -28,10 +28,11 @@ Board
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
 - PC-R2 Cloudflare secrets setup for CI
+- PC-R3 Xano backend-to-backend calls enabled
+- PC-R4 Cloudflare Pages project init with account token
 
 ## Blocked
-- PC-W1 Cloudflare secrets missing: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
-- PC-W2 Real Xano workspace/project required to implement tables, scheduled tasks, and deploy CI
+- (none currently)
 
 Agent Protocol
 1. Pick a card from Ready if any; else Running.
