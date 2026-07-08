@@ -1,0 +1,23 @@
+{
+  "timeout": 20,
+  "httpHeaders": {
+    "User-Agent": "PharmaConnect docs verifier"
+  },
+  "ignorePatterns": [
+    {
+      "pattern": "^mailto:"
+    },
+    {
+      "pattern": "^http://localhost"
+    },
+    {
+      "pattern": "^https://example.com"
+    }
+  ],
+  "replacementPatterns": [
+    {
+      "pattern": "^/",
+      "replacement": "https://github.com/pabyngono-claw/pharmaconnect/blob/main/"
+    }
+  ]
+}
