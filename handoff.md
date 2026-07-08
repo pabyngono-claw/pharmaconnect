@@ -24,6 +24,8 @@ Board
 - PC-B5 Cloudflare Worker starter template
 - PC-B6 Environment/secrets checklist and deployment policy
 - PC-B7 QA automation plan and evidence structure
+- PC-B8 FlutterFlow theme/routing/code snippets ready to apply
+- PC-B9 Cloudflare Worker code implemented for deploy
 
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
@@ -32,6 +34,11 @@ Board
 - PC-R4 Cloudflare Pages project init with account token
 - PC-R5 `backend/xano/schema.sql` ready for direct execution/schema import
 - PC-R6 Xano API Groups and internal functions config from `backend/xano/api-groups-setup.md`
+- PC-R7 Cloudflare Worker source code ready to deploy from `infra/worker/`
+- PC-R8 FlutterFlow theme/routing/code snippets ready to apply
+- PC-R9 QA runner v2 capable of generating evidence from live API
+- PC-R10 Scheduled jobs execution guide for Xano scheduler
+- PC-R11 Webhook contract ready for Orange Money / Wave handler
 
 ## Blocked
 - (none currently)
