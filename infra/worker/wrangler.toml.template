@@ -1,0 +1,15 @@
+name = "pharmaconnect-web"
+main = "src/index.ts"
+compatibility_date = "2025-07-01"
+account_id = "__CLOUDFLARE_ACCOUNT_ID__"
+
+[site]
+bucket = "./build/web"
+
+[vars]
+ENVIRONMENT = "production"
+XANO_API_URL = "https://x8ki-letl-twmt.n7.xano.io/api:1uUbbKJp"
+
+[[kv_namespaces]]
+binding = "ASSETS"
+id = "__KV_NAMESPACE_ID__"
