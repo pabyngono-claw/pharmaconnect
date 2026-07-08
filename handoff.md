@@ -31,6 +31,7 @@ Board
 - PC-B12 Worker payment webhook handler implementation with shared TS types
 - PC-B13 Playground curl commands for backend + webhook smoke tests
 - PC-B14 Local QA runner wrapper and .env.example for execution
+- PC-B15 Worker deployment README with secrets, KV setup and CI flow
 
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
