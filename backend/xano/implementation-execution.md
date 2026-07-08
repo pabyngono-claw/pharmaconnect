@@ -10,6 +10,8 @@ Estimated setup time: 60-90 minutes
 - Admin/Maker access in workspace
 - FlutterFlow/Xano file storage bucket for prescription images
 - Cloudflare account for secrets + optional worker
+- Cloudflare Worker secrets configured: `XANO_API_URL` + `XANO_API_TOKEN`
+- Webhook provider secrets: `WEBHOOK_PROVIDER_SECRETS` containing `{"orange_money":"...","wave":"..."}`
 - Optional: Postman/Thunder Client collection from `docs/api-snapshot.md`
 
 ## Step 1: Schema Deployment
@@ -124,6 +126,28 @@ Optional:
 8. Simulate payment webhook: POST /webhooks/payments/orange_money
 9. Run job: POST /jobs/expire-requests with admin token
 10. Search audit trail: GET /audit-logs?entity_type=requests
+
+## Step 11: Worker Webhook Smoke Test
+Replace placeholders below before running.
+
+Direct:
+```bash
+curl -sS -X POST 'https://<worker-host>/webhooks/payments/orange_money' \
+  -H 'content-type: application/json' \
+  -d '{"provider_transaction_id":"local-test-001","status":"succeeded","amount":1000}'
+```
+
+Idempotency check:
+```bash
+curl -sS -X POST 'https://<worker-host>/webhooks/payments/orange_money' \
+  -H 'content-type: application/json' \
+  -d '{"provider_transaction_id":"local-test-001","status":"failed","amount":1000}'
+```
+
+Expected: second call returns same transaction_id and original status unchanged.
+
+If 401/403: verify `WEBHOOK_PROVIDER_SECRETS` and signature middleware in Worker or Xano.
+If provider not unknown: ensure provider path matches exactly `orange_money` or `wave`.
 
 ## Rollback / Recovery
 - Xano DB backup: Project Settings > Backup > Download backup

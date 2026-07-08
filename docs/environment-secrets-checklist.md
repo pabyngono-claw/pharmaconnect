@@ -50,12 +50,18 @@
 - [ ] GitHub repo secrets set:
   - CLOUDFLARE_API_TOKEN
   - CLOUDFLARE_ACCOUNT_ID
+  - XANO_API_URL
   - XANO_API_TOKEN
   - FIREBASE_TOKEN (for FlutterFlow/Codemagic if used)
   - PLAY_STORE_SERVICE_ACCOUNT_JSON (if using Fastlane)
   - APP_STORE_CONNECT_API_KEY (if using Fastlane)
 - [ ] Workflow permissions verified in repo Settings > Actions
 - [ ] Branch protection enabled on main
+
+### Cloudflare Worker secrets
+- [ ] `wrangler secret put XANO_API_TOKEN` completed
+- [ ] `wrangler secret put WEBHOOK_PROVIDER_SECRETS` containing JSON `{"orange_money":"...","wave":"..."}`
+- [ ] Environment variable `XANO_API_URL` set in wrangler.toml or Cloudflare env
 
 ### Monitoring
 - [ ] Cloudflare Analytics enabled for Worker
