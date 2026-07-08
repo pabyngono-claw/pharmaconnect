@@ -30,6 +30,7 @@ Board
 - PC-R2 Cloudflare secrets setup for CI
 - PC-R3 Xano backend-to-backend calls enabled
 - PC-R4 Cloudflare Pages project init with account token
+- PC-R5 `backend/xano/schema.sql` ready for direct execution/schema import
 
 ## Blocked
 - (none currently)
