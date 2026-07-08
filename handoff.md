@@ -26,6 +26,8 @@ Board
 - PC-B7 QA automation plan and evidence structure
 - PC-B8 FlutterFlow theme/routing/code snippets ready to apply
 - PC-B9 Cloudflare Worker code implemented for deploy
+- PC-B10 Xano implementation execution guide with step-by-step rollout
+- PC-B11 FlutterFlow screen-by-screen map for patient/pharmacy/admin flows
 
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
