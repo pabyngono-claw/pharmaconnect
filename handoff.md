@@ -31,6 +31,7 @@ Board
 - PC-R3 Xano backend-to-backend calls enabled
 - PC-R4 Cloudflare Pages project init with account token
 - PC-R5 `backend/xano/schema.sql` ready for direct execution/schema import
+- PC-R6 Xano API Groups and internal functions config from `backend/xano/api-groups-setup.md`
 
 ## Blocked
 - (none currently)
