@@ -28,7 +28,7 @@ export async function handlePaymentWebhook(ctx: WebhookContext, provider: string
 
   const mappedStatus: PaymentStatusEnum = mapProviderStatus(body.status);
 
-  const upsert = await Xano(ctx, '/payment_transactions/upsert', {
+  const upsert = await Xano(ctx, `/webhooks/payments/${encodeURIComponent(provider)}`, {
     method: 'POST',
     body: JSON.stringify({
       provider_transaction_id: body.provider_transaction_id,
