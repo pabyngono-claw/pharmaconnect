@@ -32,6 +32,16 @@ Board
 - PC-B13 Playground curl commands for backend + webhook smoke tests
 - PC-B14 Local QA runner wrapper and .env.example for execution
 - PC-B15 Worker deployment README with secrets, KV setup and CI flow
+- PC-B16 FlutterFlow/Wor.../Xano integration runbook
+- PC-B17 Frontend-backend schema mapping matrix
+- PC-B18 Frontend error glossary (French)
+- PC-B19 FlutterFlow project setup checklist
+- PC-B20 Release checklist Alpha/Beta/Prod
+- PC-B21 Demo script and acceptance criteria
+- PC-B22 Worker release package local assembly guide
+- PC-B23 Repo pre-flight check script
+- PC-B24 README refresh with current structure + quick links
+- PC-B25 GitHub issue templates and PR template
 
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
