@@ -1,7 +1,10 @@
 import { getAssetFromKV, mapRequestToAsset } from '@cloudflare/kv-asset-handler';
+import { handlePaymentWebhook } from './handlers/payment-webhook';
 
 export interface Env {
   ASSETS: KVNamespace;
+  XANO_API_URL: string;
+  XANO_API_TOKEN: string;
 }
 
 const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8' } as const;
@@ -64,6 +67,22 @@ export default {
       return new Response(apiResponse.body, {
         status: apiResponse.status,
         headers: responseHeaders,
+      });
+    }
+
+    // Payment webhooks
+    const paymentMatch = url.pathname.match(/^\/webhooks\/payments\/([^\/]+)$/);
+    if (paymentMatch && request.method === 'POST') {
+      const provider = paymentMatch[1];
+      const raw = await request.json().catch(() => ({}));
+      const res = await handlePaymentWebhook(
+        { xanoBaseUrl: env.XANO_API_URL, xanoToken: env.XANO_API_TOKEN },
+        provider,
+        raw
+      );
+      return new Response(res.body, {
+        status: res.status,
+        headers: { ...JSON_HEADERS, ...corsAndSecurityHeaders(origin) },
       });
     }
 

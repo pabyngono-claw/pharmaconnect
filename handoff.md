@@ -28,6 +28,7 @@ Board
 - PC-B9 Cloudflare Worker code implemented for deploy
 - PC-B10 Xano implementation execution guide with step-by-step rollout
 - PC-B11 FlutterFlow screen-by-screen map for patient/pharmacy/admin flows
+- PC-B12 Worker payment webhook handler implementation with shared TS types
 
 ## Ready
 - PC-R1 Xano workspace provisioning and table creation
