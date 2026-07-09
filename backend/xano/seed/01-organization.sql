@@ -1,35 +1,9 @@
-# Seed — Organizations, Pharmacies, and Staff
-# Run in Xano Database > Query or via backend import as SQL.
-# All UUIDs are deterministic for demo/test environments.
-
--- Organizations
-INSERT INTO organizations (id, name, registration_number)
+INSERT INTO organizations (id, name, country_code, region, created_at)
 VALUES
-  ('00000000-0000-0000-0000-000000000001', 'Pharmacie Demo SA', 'REG-DEMO-001'),
-  ('00000000-0000-0000-0000-000000000002', 'Pharmacie Backend SARL', 'REG-BACKEND-002')
-ON CONFLICT (registration_number) DO NOTHING;
+  ('2da51c9b-c0ba-54ba-bbd2-05637eab7b15', 'Pharma Group A', 'SN', 'Dakar', '2025-01-01T00:00:00Z'),
+  ('ef54d76d-6c39-5b37-8078-47aa7c00930d', 'Pharma Group B', 'SN', 'Thies', '2025-01-01T00:00:00Z');
 
--- Pharmacies
-INSERT INTO pharmacies (id, organization_id, name, address, quartier, lat, lng, phone, approval_status, is_active)
+INSERT INTO pharmacies (id, organization_id, name, lat, lng, active, created_at)
 VALUES
-  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'Pharmacie Demo Plateau', 'Avenue Bourguiba, Dakar', 'Plateau', 14.71670000, -17.46770000, '+221781234567', 'approved', true),
-  ('10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000002', 'Pharmacie Backend Point E', 'Rue de Point E, Dakar', 'Point E', 14.72050000, -17.45230000, '+221789876543', 'pending', false),
-  ('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000001', 'Pharmacie Demo Almadies', 'Route des Almadies, Dakar', 'Almadies', 14.73580000, -17.49560000, '+221770000111', 'approved', true)
-ON CONFLICT (phone) DO NOTHING;
-
--- Pharmacy hours (Mon-Fri 8-20, Sat 9-14, Sun closed)
-INSERT INTO pharmacy_hours (pharmacy_id, day_of_week, open_time, close_time)
-SELECT '10000000-0000-0000-0000-000000000001', d, CASE WHEN d = 6 THEN '09:00'::time ELSE '08:00'::time END, CASE WHEN d = 6 THEN '14:00'::time ELSE '20:00'::time END
-FROM generate_series(0,6) AS d
-WHERE d <> 0;
-
-INSERT INTO pharmacy_hours (pharmacy_id, day_of_week, open_time, close_time)
-SELECT '10000000-0000-0000-0000-000000000003', d, CASE WHEN d = 6 THEN '09:00'::time ELSE '08:00'::time END, CASE WHEN d = 6 THEN '14:00'::time ELSE '20:00'::time END
-FROM generate_series(0,6) AS d
-WHERE d <> 0;
-
--- Garde/on-call dates: pharmacy 001 open now->+8h, pharmacy 003 open +2h->+10h
-INSERT INTO garde_dates (pharmacy_id, staff_user_id, start_at, end_at)
-VALUES
-  ('10000000-0000-0000-0000-000000000001', '20000000-0000-0000-0000-000000000001', now(), now() + interval '8 hours'),
-  ('10000000-0000-0000-0000-000000000003', '20000000-0000-0000-0000-000000000002', now() + interval '2 hours', now() + interval '10 hours');
+  ('9f0f5e4e-000d-5a5d-a035-66439d1f9fb8', '2da51c9b-c0ba-54ba-bbd2-05637eab7b15', 'Pharmacie Test A', 14.7167, -17.4677, true, '2025-01-01T00:00:00Z'),
+  ('dd428c4c-5312-57c9-895c-87d2ffd2c8eb', 'ef54d76d-6c39-5b37-8078-47aa7c00930d', 'Pharmacie Test B', 14.79, -17.38, true, '2025-01-01T00:00:00Z');

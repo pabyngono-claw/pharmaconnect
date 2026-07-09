@@ -1,26 +1,8 @@
-# Seed — Users: Pharmacy Staff and Patients
-# Staff users are placeholder accounts; link by Xano auth if available or store password_hash via dummy value.
-# Deterministic IDs.
-
--- Staff users
-INSERT INTO users (id, phone, email, role, is_verified, metadata)
+INSERT INTO users (id, phone, name, role, created_at)
 VALUES
-  ('20000000-0000-0000-0000-000000000001', '+221****1001', 'owner.demo@example.com', 'pharmacy', true, '{"first_name":"Aminata","last_name":"Diop"}'),
-  ('20000000-0000-0000-0000-000000000002', '+221****1002', 'owner.backend@example.com', 'pharmacy', true, '{"first_name":"Ousmane","last_name":"Ndiaye"}'),
-  ('20000000-0000-0000-0000-000000000003', '+221****1003', 'manager.demo@example.com', 'pharmacy', true, '{"first_name":"Fatou","last_name":"Sow"}')
-ON CONFLICT (phone) DO NOTHING;
-
--- Pharmacy staff link table
-INSERT INTO pharmacy_staff (pharmacy_id, user_id, role)
-VALUES
-  ('10000000-0000-0000-0000-000000000001', '20000000-0000-0000-0000-000000000001', 'owner'),
-  ('10000000-0000-0000-0000-000000000003', '20000000-0000-0000-0000-000000000002', 'owner'),
-  ('10000000-0000-0000-0000-000000000001', '20000000-0000-0000-0000-000000000003', 'manager');
-
--- Patient users
-INSERT INTO users (id, phone, email, role, is_verified, metadata)
-VALUES
-  ('30000000-0000-0000-0000-000000000001', '+221****2001', 'patient.one@example.com', 'patient', true, '{"first_name":"Ibrahima","last_name":"Fall"}'),
-  ('30000000-0000-0000-0000-000000000002', '+221****2002', 'patient.two@example.com', 'patient', true, '{"first_name":"Mariama","last_name":"Ba"}'),
-  ('30000000-0000-0000-0000-000000000003', '+221****2003', 'patient.three@example.com', 'patient', true, '{"first_name":"Abdou","last_name":"Diallo"}')
-ON CONFLICT (phone) DO NOTHING;
+  ('c8ffbcb6-98aa-508b-9d2a-309fd8c5307d', '+221770000001', 'Pharmacien A', 'pharmacy', '2025-01-01T00:00:00Z'),
+  ('4bd2dc17-6e4b-5114-bfa6-746b455487f6', '+221770000002', 'Pharmacien B', 'pharmacy', '2025-01-01T00:00:00Z'),
+  ('3c2abed4-b71a-58d2-a2dd-c47d15f38678', '+221770000003', 'Admin A', 'admin', '2025-01-01T00:00:00Z'),
+  ('f2d85b6c-013f-5335-936f-39155bc13eed', '+221770000004', 'Patient A', 'patient', '2025-01-01T00:00:00Z'),
+  ('1851272c-b5ca-544d-b998-cb558c2eead4', '+221770000005', 'Patient B', 'patient', '2025-01-01T00:00:00Z'),
+  ('809498bc-d5ef-55e3-8df1-6050de1e1c70', '+221770000006', 'Patient C', 'patient', '2025-01-01T00:00:00Z');
