@@ -12,3 +12,6 @@ coverage/
 dist/
 build/
 *.local
+*.log
+*.tmp
+*.pid
