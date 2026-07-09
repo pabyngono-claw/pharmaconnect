@@ -1,5 +1,6 @@
 # Docs Index — PharmaConnect v2.0
 
+- `architecture-diagrams.md`: System Architecture Diagrams — PharmaConnect v2.0
 - `ceo-review.md`: CEO Review — PharmaConnect v2.0
 - `demo-script.md`: Demo Script and Acceptance Criteria — PharmaConnect v2.0
 - `design-consultation.md`: Design Consultation — PharmaConnect v2.0
