@@ -1,0 +1,2 @@
+id,patient_id,prescription_images_count,product_type,notes,quantity,expires_at,re_broadcast_suggested,status,created_at,updated_at
+17ab7f95-f925-4c73-add5-547a5e7ce0c4,5d96e4e6-d28f-440c-9e0c-1599a754e1a5,0,prescription,Doliprane 1000,2,2026-07-12T17:45:59.444336,False,submitted,2026-07-09T17:45:59.444336,2026-07-09T17:45:59.444336
