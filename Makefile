@@ -1,4 +1,4 @@
-.PHONY: help health qa verify worker-secrets worker-package lint-docs
+.PHONY: help health qa verify worker-secrets worker-package lint-docs docs-index
 
 help:
 	@printf "PharmaConnect v2.0 make targets:\n"
@@ -7,6 +7,7 @@ help:
 	@printf "  verify           - Run markdown link checks\n"
 	@printf "  lint-docs        - Basic markdown hygiene\n"
 	@printf "  worker-package   - Display Worker deploy assembly steps\n"
+	@printf "  docs-index       - Generate docs index to docs/INDEX.md\n"
 
 health:
 	python3 scripts/check-repo-health.py
@@ -29,4 +30,7 @@ worker-package:
 	@printf "5. wrangler secret put XANO_API_TOKEN\n"
 	@printf "6. wrangler secret put WEBHOOK_PROVIDER_SECRETS\n"
 	@printf "7. wrangler deploy\n"
+
+docs-index:
+	python3 scripts/generate-docs-index.py
 

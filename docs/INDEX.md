@@ -1,0 +1,32 @@
+# Docs Index — PharmaConnect v2.0
+
+- `ceo-review.md`: CEO Review — PharmaConnect v2.0
+- `demo-script.md`: Demo Script and Acceptance Criteria — PharmaConnect v2.0
+- `design-consultation.md`: Design Consultation — PharmaConnect v2.0
+- `design-review.md`: Design Review — PharmaConnect v2.0
+- `eng-review.md`: Eng Manager Review — PharmaConnect v2.0
+- `environment-secrets-checklist.md`: Environment & Secrets Checklist — PharmaConnect v2.0
+- `flutterflow-project-setup.md`: FlutterFlow Project Setup — PharmaConnect v2.0
+- `frontend-backend-mapping.md`: Front/Back Schema Mapping — PharmaConnect v2.0
+- `frontend-error-glossary.md`: PharmaConnect Frontend Error Glossary
+- `integration-runbook.md`: FlutterFlow + Worker + Xano Integration Runbook — PharmaConnect v2.0
+- `onboarding.md`: Onboarding — PharmaConnect v2.0
+- `playground/curl-commands.md`: Playground Curl Commands — PharmaConnect v2.0
+- `qa-automation-plan.md`: QA Automation Artifacts — PharmaConnect v2.0
+- `qa-evidence/TC-01-otp.md`: TC-01 OTP rate limiting
+- `qa-evidence/TC-02-duplicate.md`: TC-02 Duplicate auth linking
+- `qa-evidence/TC-03-request.md`: TC-03 Request expiry
+- `qa-evidence/TC-04-reservation.md`: TC-04 Reservation race condition
+- `qa-evidence/TC-05-reservation.md`: TC-05 Reservation hold expiry
+- `qa-evidence/TC-06-illegal.md`: TC-06 Illegal status transition
+- `qa-evidence/TC-07-partial.md`: TC-07 Partial document approval
+- `qa-evidence/TC-08-tva.md`: TC-08 TVA computation server-side
+- `qa-evidence/TC-09-payment.md`: TC-09 Payment webhook replay
+- `qa-evidence/TC-10-account.md`: TC-10 Account deletion cascade
+- `qa-evidence/TC-11-waiting-list.md`: TC-11 Waiting-list 24h window
+- `qa-evidence/TC-12-multi-branch.md`: TC-12 Multi-branch staff scoping
+- `qa-regression-pack.md`: QA Regression Pack — PharmaConnect v2.0
+- `release-checklist.md`: Go/No-Go Release Checklist — PharmaConnect v2.0
+- `release-runbook.md`: Release Runbook — PharmaConnect v2.0
+- `security-review.md`: Security Review — PharmaConnect v2.0
+- `worker-release-package.md`: Worker release package — PharmaConnect v2.0
