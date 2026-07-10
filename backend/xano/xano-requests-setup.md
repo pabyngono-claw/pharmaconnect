@@ -34,7 +34,6 @@ After creating the group, add each route and function below exactly as written.
 - Add action: `Transform`
 - Expression: `context.access_token && context.access_token.user_id ? context.access_token.user_id : null`
 - Output variable: `patient_id`
-- Save this as a header for later: `X-Patient-ID`
 
 **Action 3: Set expiry**
 - Add action: `Transform`
@@ -56,7 +55,7 @@ After creating the group, add each route and function below exactly as written.
   - `updated_at`: `now`
 - Output variable: `request`
 
-**Action 5: Insert request_items if images provided**
+**Action 5: Insert request_item if images provided**
 - Add action: `Loop`
 - Array: `input.images`
 - Index variable: `idx`
@@ -65,7 +64,7 @@ After creating the group, add each route and function below exactly as written.
   - Add action: `Add Record`
   - Table: `request_item`
   - Fields:
-    - `request_id`: `request.id`
+    - `medicine_request_id`: `request.id`
     - `sort`: `idx`
     - `url`: `img.url`
     - `created_at`: `now`
@@ -79,7 +78,7 @@ After creating the group, add each route and function below exactly as written.
   - `approval_status == "approved"`
 - Output variable: `nearby`
 
-**Action 7: Insert request_pharmacies**
+**Action 7: Insert request_pharmacies (fan-out)**
 - Add action: `Loop`
 - Array: `nearby`
 - Index variable: `pi`
@@ -88,7 +87,7 @@ After creating the group, add each route and function below exactly as written.
   - Add action: `Add Record`
   - Table: `request_pharmacies`
   - Fields:
-    - `request_id`: `request.id`
+    - `medicine_request_id`: `request.id`
     - `pharmacy_id`: `pharm.id`
     - `status`: `"pending"`
     - `created_at`: `now`
@@ -99,9 +98,12 @@ After creating the group, add each route and function below exactly as written.
 - Table: `notification`
 - Fields:
   - `user_id`: `patient_id`
-  - `type`: `"request_created"`
-  - `payload`: `{request_id: request.id, pharmacy_count: nearby.length}`
-  - `read`: `false`
+  - `pharmacy_id`: `null`
+  - `type`: `"request"`
+  - `title`: `"Request submitted"`
+  - `body`: `"Your request has been sent to {{ nearby.length }} pharmacies."`
+  - `deep_link`: `"/requests/{{ request.id }}"`
+  - `read_at`: `null`
   - `created_at`: `now`
 
 **Action 9: Return success**
@@ -110,7 +112,7 @@ After creating the group, add each route and function below exactly as written.
 - Body:
   ```
   {
-    "request_id": "{{ request.id }}",
+    "medicine_request_id": "{{ request.id }}",
     "expires_at": "{{ expires_at }}"
   }
   ```
@@ -179,7 +181,7 @@ After creating the group, add each route and function below exactly as written.
 - Body:
   ```
   {
-    "request_id": "{{ req.id }}"
+    "medicine_request_id": "{{ req.id }}"
   }
   ```
 
@@ -203,11 +205,7 @@ After creating the group, add each route and function below exactly as written.
 
 **Action 2: Branch — not found**
 - Condition: `req === null`
-  - **If yes:** Return Error `404`
-    ```
-    {"error":{"code":"NOT_FOUND","message":"Request not found","field_errors":[]}}
-    ```
-    Stop flow.
+  - **If yes:** Return Error `404` (same format). Stop flow.
 
 **Action 3: Resolve user**
 - Add action: `Query`
@@ -227,14 +225,14 @@ After creating the group, add each route and function below exactly as written.
 **Action 5: Fetch request items**
 - Add action: `Query`
 - Table: `request_item`
-- Filter: `request_id == req.id`
+- Filter: `medicine_request_id == req.id`
 - Sort by: `sort`
 - Output variable: `images`
 
-**Action 6: Fetch request pharmacies**
+**Action 6: Fetch request_pharmacies**
 - Add action: `Query`
 - Table: `request_pharmacies`
-- Filter: `request_id == req.id`
+- Filter: `medicine_request_id == req.id`
 - Output variable: `rp_list`
 
 **Action 7: Loop and enrich pharmacy info**
@@ -257,10 +255,10 @@ After creating the group, add each route and function below exactly as written.
   - Key: `rp.phone = pharm.phone || null`
 - End loop
 
-**Action 8: Fetch pharmacy responses where available**
+**Action 8: Fetch pharmacy_responses where available**
 - Add action: `Query`
 - Table: `pharmacy_response`
-- Filter: `request_id == req.id`
+- Filter: `medicine_request_id == req.id`
 - Output variable: `responses`
 
 **Action 9: Build response map**
@@ -283,7 +281,7 @@ After creating the group, add each route and function below exactly as written.
 - Body:
   ```
   {
-    "id": "{{ req.id }}",
+    "medicine_request_id": "{{ req.id }}",
     "product_type": "{{ req.product_type }}",
     "status": "{{ req.status }}",
     "expires_at": "{{ req.expires_at }}",
@@ -354,7 +352,7 @@ After creating the group, add each route and function below exactly as written.
 1. Add Function: `create`
 2. Route: `POST /reservations`
 3. Input:
-   - `request_id`: string
+   - `medicine_request_id`: string
    - `response_id`: string
    - `pharmacy_id`: string
 4. Header:
@@ -365,7 +363,7 @@ After creating the group, add each route and function below exactly as written.
 **Action 1: Check idempotency — fetch request + response first**
 - Add action: `Query`
 - Table: `medicine_request`
-- Filter: `id == input.request_id`
+- Filter: `id == input.medicine_request_id`
 - Limit: `1`
 - Output variable: `req`
 
@@ -382,7 +380,7 @@ After creating the group, add each route and function below exactly as written.
 - Table: `pharmacy_response`
 - Filter:
   - `id == input.response_id`
-  - `request_id == input.request_id`
+  - `medicine_request_id == input.medicine_request_id`
   - `pharmacy_id == input.pharmacy_id`
 - Limit: `1`
 - Output variable: `resp`
@@ -417,11 +415,11 @@ After creating the group, add each route and function below exactly as written.
 - Add action: `Add Record`
 - Table: `reservation`
 - Fields:
-  - `patient_id`: `req.patient_id`
-  - `request_id`: `req.id`
-  - `pharmacy_id`: `input.pharmacy_id`
+  - `medicine_request_id`: `req.id`
   - `response_id`: `input.response_id`
-  - `state`: `"submitted"`
+  - `pharmacy_id`: `input.pharmacy_id`
+  - `patient_id`: `req.patient_id`
+  - `status`: `"submitted"`
   - `hold_expires_at`: `hold_expires_at`
   - `served_at`: `null`
   - `metadata`: `{idempotency_key: request.headers["Idempotency-Key"]}`
@@ -440,17 +438,23 @@ After creating the group, add each route and function below exactly as written.
 - Table: `notification`
 - Fields:
   - `user_id`: `req.patient_id`
-  - `type`: `"reservation_created"`
-  - `payload`: `{reservation_id: reservation.id, request_id: req.id, pharmacy_id: input.pharmacy_id, expires_at: hold_expires_at.toISOString()}`
-  - `read`: `false`
+  - `pharmacy_id`: `input.pharmacy_id`
+  - `type`: `"reservation"`
+  - `title`: `"Reservation created"`
+  - `body`: `"Your reservation is confirmed. Pickup expires {{ hold_expires_at.toISOString() }}"`
+  - `deep_link`: `"/reservations/{{ reservation.id }}"`
+  - `read_at`: `null`
   - `created_at`: `now`
 
 - Add action: `Add Record`
 - Table: `notification`
-  - `user_id`: (need pharmacy owner; fetch pharmacy_staff where pharmacy_id=input.pharmacy_id and role=owner limit 1)
-  - `type`: `"reservation_received"`
-  - `payload`: `{reservation_id: reservation.id, request_id: req.id, patient_id: req.patient_id}`
-  - `read`: `false`
+  - `user_id`: (fetch pharmacy owner — query pharmacy_staff where pharmacy_id=input.pharmacy_id and role=owner limit 1)
+  - `pharmacy_id`: `input.pharmacy_id`
+  - `type`: `"reservation"`
+  - `title`: `"New reservation received"`
+  - `body`: `"Patient reserved your offer. Ready for pickup."`
+  - `deep_link`: `"/reservations/{{ reservation.id }}"`
+  - `read_at`: `null`
   - `created_at`: `now`
 
 **Action 11: Return success**

@@ -15,8 +15,7 @@ After creating the group, add each route and function below exactly as written.
 4. Set input:
    - `phone`: string
 
-### Function logic
-Use Xano's visual flow builder.
+### Function logic (use Xano visual flow builder)
 
 **Action 1: Normalize phone**
 - Add action: `Transform`
@@ -360,8 +359,7 @@ Use Xano's visual flow builder.
       - `created_at`: `now`
       - `updated_at`: `now`
     - Output variable: `user = new_user`
-  - **If no:**
-    - Continue
+  - **If no:** Continue
 
 **Action 4: Issue access token**
 - Add action: `Transform`
@@ -387,7 +385,7 @@ Set these in Xano Environment before building:
 - `SMS_PROVIDER_API_KEY`
 - `JWT_SECRET`
 
-## Auth Middleware (optional but recommended)
+## Auth Middleware (recommended)
 
 Create a reusable function `auth.middleware`:
 1. Read header `Authorization`
@@ -396,4 +394,15 @@ Create a reusable function `auth.middleware`:
 4. Attach `access_token.user_id` and `access_token.role` to context
 5. Return 401 if invalid
 
-Then attach this middleware to protected routes in other groups.
+Attach this middleware to protected routes in other groups.
+
+---
+
+## Common Errors
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| 429 on `/otp/request` | `recent_count >= 3` | Wait 10 min or increase limit |
+| 401 on `/otp/verify` | `otp === null` or wrong code | Check phone format, code expiry |
+| 401 on `/refresh` | `existing === null` | Token expired/revoked; re-login |
+| 401 on `/link` | Provider token invalid | Verify provider config |

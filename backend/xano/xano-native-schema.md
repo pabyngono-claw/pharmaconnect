@@ -26,7 +26,8 @@ Relations:
 - has_many: notifications
 - has_many: support_tickets
 - has_many: subscriptions
-- has_many: payment_transactions
+- has_many: pharmacy_document
+- has_many: payment
 - has_many: audit_logs (as actor_user_id)
 
 ---
@@ -60,7 +61,7 @@ Relations:
 
 Relations:
 - has_many: pharmacy_staff
-- has_many: pharmacy_documents
+- has_many: pharmacy_document
 - has_many: pharmacy_hours
 - has_many: garde_dates
 - has_many: pharmacy_inventory
@@ -86,7 +87,7 @@ Unique: pharmacy_id + user_id
 
 ---
 
-## pharmacy_documents
+## pharmacy_document
 
 - id: uuid | required | auto-generated | primary key
 - pharmacy_id: uuid | required | relation: pharmacies.id
@@ -169,7 +170,7 @@ Unique: pharmacy_id + name + dosage + form
 
 ---
 
-## medicine_request (requests)
+## medicine_request
 
 - id: uuid | required | auto-generated | primary key
 - patient_id: uuid | required | relation: users.id
@@ -184,17 +185,17 @@ Unique: pharmacy_id + name + dosage + form
 - updated_at: datetime | required | | now()
 
 Relations:
-- has_many: request_items
+- has_many: request_item
 - has_many: request_pharmacies
-- has_many: responses
+- has_many: pharmacy_responses
 - has_many: reservations
 
 ---
 
-## request_item (request_images)
+## request_item
 
 - id: uuid | required | auto-generated | primary key
-- request_id: uuid | required | relation: medicine_request.id
+- medicine_request_id: uuid | required | relation: medicine_request.id
 - url: text | required | |
 - sort: number | required | | 0
 - created_at: datetime | required | | now()
@@ -204,7 +205,7 @@ Relations:
 ## request_pharmacies
 
 - id: uuid | required | auto-generated | primary key
-- request_id: uuid | required | relation: medicine_request.id
+- medicine_request_id: uuid | required | relation: medicine_request.id
 - pharmacy_id: uuid | required | relation: pharmacies.id
 - status: text | required | | sent | enum: sent / viewed / responded
 - sent_at: datetime | required | | now()
@@ -212,14 +213,14 @@ Relations:
 - responded_at: datetime | | | |
 - created_at: datetime | required | | now()
 
-Unique: request_id + pharmacy_id
+Unique: medicine_request_id + pharmacy_id
 
 ---
 
-## pharmacy_response (responses)
+## pharmacy_response
 
 - id: uuid | required | auto-generated | primary key
-- request_id: uuid | required | relation: medicine_request.id
+- medicine_request_id: uuid | required | relation: medicine_request.id
 - pharmacy_id: uuid | required | relation: pharmacies.id
 - unit_price: number | required | | | decimal(10,2)
 - quantity: number | required | |
@@ -230,18 +231,18 @@ Unique: request_id + pharmacy_id
 - hold_expires_at: datetime | | | |
 - created_at: datetime | required | | now()
 
-Unique: request_id + pharmacy_id
+Unique: medicine_request_id + pharmacy_id
 
 ---
 
 ## reservation
 
 - id: uuid | required | auto-generated | primary key
-- request_id: uuid | required | relation: medicine_request.id
+- medicine_request_id: uuid | required | relation: medicine_request.id
 - response_id: uuid | required | relation: pharmacy_response.id
 - pharmacy_id: uuid | required | relation: pharmacies.id
 - patient_id: uuid | required | relation: users.id
-- state: text | required | | submitted | enum: submitted / ready / served / rejected / expired / cancelled
+- status: text | required | | submitted | enum: submitted / ready / served / rejected / expired / cancelled
 - hold_expires_at: datetime | | | |
 - served_at: datetime | | | |
 - created_at: datetime | required | | now()
@@ -255,7 +256,7 @@ Unique: request_id + pharmacy_id
 - pharmacy_id: uuid | required | relation: pharmacies.id
 - reservation_id: uuid | | relation: reservation.id |
 - queue_position: number | required | |
-- state: text | required | | ready | enum: ready / expired / served / cancelled
+- status: text | required | | ready | enum: ready / expired / served / cancelled
 - ready_at: datetime | required | |
 - expires_at: datetime | required | |
 - notified_at: datetime | | | |
@@ -292,7 +293,7 @@ Unique: request_id + pharmacy_id
 
 ---
 
-## payment (payment_transactions)
+## payment
 
 - id: uuid | required | auto-generated | primary key
 - subscription_id: uuid | | relation: subscription.id |
@@ -377,13 +378,13 @@ Unique: request_id + pharmacy_id
 ## audit_logs
 
 - id: uuid | required | auto-generated | primary key
-- actor_user_id: uuid | | relation: users.id |
+- user_id: uuid | | relation: users.id |
+- pharmacy_id: uuid | | relation: pharmacies.id | optional
 - action: text | required | |
 - entity_type: text | required | |
 - entity_id: text | required | |
-- changes: json | | | |
-- ip_address: text | | | |
-- user_agent: text | | | |
+- old_values: json | | | |
+- new_values: json | | | |
 - created_at: datetime | required | | now()
 
 ---
@@ -401,7 +402,7 @@ After creating tables, add these indexes via Xano Database > Indexes:
 - pharmacies_location_idx: pharmacies(lat, lng)
 - pharmacies_status_idx: pharmacies(approval_status)
 - pharmacy_staff_pharmacy_user_idx: pharmacy_staff(pharmacy_id, user_id)
-- pharmacy_documents_pharmacy_idx: pharmacy_documents(pharmacy_id)
+- pharmacy_document_pharmacy_idx: pharmacy_document(pharmacy_id)
 - pharmacy_hours_pharmacy_day_idx: pharmacy_hours(pharmacy_id, day_of_week)
 - garde_dates_pharmacy_idx: garde_dates(pharmacy_id, start_at, end_at)
 - medicine_requests_patient_idx: medicine_request(patient_id, created_at)
@@ -413,7 +414,7 @@ After creating tables, add these indexes via Xano Database > Indexes:
 - waitlists_pharmacy_state_ready_idx: waitlist(pharmacy_id, state, ready_at)
 - notifications_user_read_idx: notification(user_id, read_at)
 - subscriptions_status_idx: subscription(status, current_period_end)
-- payment_transactions_provider_txn_idx: payment(provider_transaction_id)
+- payment_provider_txn_idx: payment(provider_transaction_id)
 - audit_logs_entity_idx: audit_logs(entity_type, entity_id, created_at)
 - pharmacy_inventory_pharmacy_catalog_idx: pharmacy_inventory(pharmacy_id, medicine_catalog_id)
 - inventory_update_inventory_idx: inventory_update(pharmacy_inventory_id)
