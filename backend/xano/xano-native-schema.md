@@ -26,7 +26,7 @@ Relations:
 - has_many: notifications
 - has_many: support_tickets
 - has_many: subscriptions
-- has_many: pharmacy_document
+- has_many: pharmacy_documents
 - has_many: payment
 - has_many: audit_logs (as actor_user_id)
 
@@ -61,7 +61,7 @@ Relations:
 
 Relations:
 - has_many: pharmacy_staff
-- has_many: pharmacy_document
+- has_many: pharmacy_documents
 - has_many: pharmacy_hours
 - has_many: garde_dates
 - has_many: pharmacy_inventory
@@ -87,7 +87,7 @@ Unique: pharmacy_id + user_id
 
 ---
 
-## pharmacy_document
+## pharmacy_documents
 
 - id: uuid | required | auto-generated | primary key
 - pharmacy_id: uuid | required | relation: pharmacies.id
@@ -402,7 +402,7 @@ After creating tables, add these indexes via Xano Database > Indexes:
 - pharmacies_location_idx: pharmacies(lat, lng)
 - pharmacies_status_idx: pharmacies(approval_status)
 - pharmacy_staff_pharmacy_user_idx: pharmacy_staff(pharmacy_id, user_id)
-- pharmacy_document_pharmacy_idx: pharmacy_document(pharmacy_id)
+- pharmacy_documents_pharmacy_idx: pharmacy_documents(pharmacy_id)
 - pharmacy_hours_pharmacy_day_idx: pharmacy_hours(pharmacy_id, day_of_week)
 - garde_dates_pharmacy_idx: garde_dates(pharmacy_id, start_at, end_at)
 - medicine_requests_patient_idx: medicine_request(patient_id, created_at)

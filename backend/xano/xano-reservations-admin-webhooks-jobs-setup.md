@@ -258,7 +258,7 @@ All routes require admin role.
 
 **Action 3: Fetch document**
 - Add action: `Query`
-- Table: `pharmacy_document`
+- Table: `pharmacy_documents`
 - Filter: `id == route.id`
 - Limit: `1`
 - Output variable: `doc`
@@ -274,7 +274,7 @@ All routes require admin role.
 
 **Action 6: Update document**
 - Add action: `Update Record`
-- Table: `pharmacy_document`
+- Table: `pharmacy_documents`
 - Find by: `id == doc.id`
 - Set:
   - `status = new_status`
@@ -285,7 +285,7 @@ All routes require admin role.
 
 **Action 7: Check all documents approved for pharmacy**
 - Add action: `Query`
-- Table: `pharmacy_document`
+- Table: `pharmacy_documents`
 - Filter: `pharmacy_id == doc.pharmacy_id`
 - Output variable: `all_docs`
 
@@ -308,7 +308,7 @@ All routes require admin role.
   - `user_id`: `admin_user.id`
   - `pharmacy_id`: `doc.pharmacy_id`
   - `action`: `"review_document"`
-  - `entity_type`: `"pharmacy_document"`
+  - `entity_type`: `"pharmacy_documents"`
   - `entity_id`: `doc.id`
   - `old_values`: `{status: doc.status}`
   - `new_values`: `{status: new_status}`
