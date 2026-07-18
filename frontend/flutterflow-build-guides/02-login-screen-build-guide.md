@@ -1,4 +1,4 @@
-# PharmaConnect — Login Screen Build Guide
+# PharmaConnect -- Login Screen Build Guide
 
 **FlutterFlow build instructions for Screen 2/21**
 Source of truth: `frontend/screens/02-login-screen.md`
@@ -7,7 +7,7 @@ Source of truth: `frontend/screens/02-login-screen.md`
 
 ## 1. App State Variables
 
-**Menu:** Settings & Integrations → App State → + Add
+**Menu:** Settings & Integrations -> App State -> + Add
 
 | # | Name | Type | Default | Notes |
 |---|------|------|---------|-------|
@@ -19,7 +19,7 @@ Source of truth: `frontend/screens/02-login-screen.md`
 
 ## 2. Page State Variables
 
-**Menu:** Select LoginScreen page → Page State (bottom panel) → + Add
+**Menu:** Select LoginScreen page -> Page State (bottom panel) -> + Add
 
 | # | Name | Type | Default | Notes |
 |---|------|------|---------|-------|
@@ -34,7 +34,7 @@ Source of truth: `frontend/screens/02-login-screen.md`
 
 ## 3. Custom Functions
 
-**Menu:** Settings & Integrations → Custom Code → Custom Functions → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Custom Functions -> + Add
 
 ### 3a. `normalizePhone`
 
@@ -94,7 +94,7 @@ Map<String, dynamic> validatePhone(String input) {
 
 ## 4. API Call Setup
 
-**Menu:** Settings & Integrations → API Calls → + Add API
+**Menu:** Settings & Integrations -> API Calls -> + Add API
 
 | Field | Value |
 |-------|-------|
@@ -105,7 +105,7 @@ Map<String, dynamic> validatePhone(String input) {
 | **Headers** | `Content-Type: application/json` |
 | **Body** | `{ "phone": "{{normalized_phone}}" }` |
 
-**Variables tab** — define response variables:
+**Variables tab** -- define response variables:
 
 | Variable Name | Type | JSON Path |
 |---------------|------|-----------|
@@ -114,9 +114,9 @@ Map<String, dynamic> validatePhone(String input) {
 
 ---
 
-## 5. Custom Action (Optional — for analytics)
+## 5. Custom Action (Optional -- for analytics)
 
-**Menu:** Settings & Integrations → Custom Code → Custom Actions → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Custom Actions -> + Add
 
 | Property | Value |
 |----------|-------|
@@ -146,7 +146,7 @@ Future<void> logAnalyticsEvent(
 
 ## 6. Page Setup
 
-**Menu:** Pages → + Add Page → Blank
+**Menu:** Pages -> + Add Page -> Blank
 
 | Property | Value |
 |----------|-------|
@@ -258,7 +258,7 @@ Page (LoginScreen)
         │   │   └── Size: 20, Color: #FFFFFF
         │   └── On Tap:
         │       1. Set `is_loading = true`
-        │       2. Run `normalizePhone(phone_input)` → store as `normalized_phone`
+        │       2. Run `normalizePhone(phone_input)` -> store as `normalized_phone`
         │       3. **Analytics (optional):** logAnalyticsEvent("otp_requested", {"phone": normalized_phone})
         │       4. Call API `auth_request_otp` with body `{"phone": normalized_phone}`
         │          ├── Success (200):
@@ -266,7 +266,7 @@ Page (LoginScreen)
         │          │   2. Set App State `masked_phone = api_masked_phone`
         │          │   3. Set App State `cooldown_seconds = api_cooldown_seconds`
         │          │   4. **Analytics (optional):** logAnalyticsEvent("otp_success", {"phone": masked_phone})
-        │          │   5. Navigate To → OtpScreen
+        │          │   5. Navigate To -> OtpScreen
         │          │      ├── Page: OtpScreen
         │          │      └── Type: Push
         │          ├── Rate Limited (429):
@@ -287,7 +287,7 @@ Page (LoginScreen)
         ├── Text ("Connexion pharmacie ?")
         │   ├── Size: 14
         │   ├── Color: #0F5B6E
-        │   ├── On Tap: Navigate To → PharmacyLoginScreen (future screen)
+        │   ├── On Tap: Navigate To -> PharmacyLoginScreen (future screen)
         │   └── Alignment: center
 
         ├── SizedBox (spacer, flex: 1)
@@ -297,19 +297,19 @@ Page (LoginScreen)
             │   ├── Text: "Conditions d'utilisation"
             │   ├── Size: 11
             │   ├── Color: #9CA3AF
-            │   └── On Tap: Open URL → https://pharmaconnect.example/terms
+            │   └── On Tap: Open URL -> https://pharmaconnect.example/terms
             └── InkWell (Politique de confidentialité)
                 ├── Text: "Politique de confidentialité"
                 ├── Size: 11
                 ├── Color: #9CA3AF
-                └── On Tap: Open URL → https://pharmaconnect.example/privacy
+                └── On Tap: Open URL -> https://pharmaconnect.example/privacy
 ```
 
 ---
 
 ## 8. Keyboard Submit Action
 
-On the TextField's **On Submit** action (triggered when keyboard "done"/"→" is tapped):
+On the TextField's **On Submit** action (triggered when keyboard "done"/"->" is tapped):
 
 | Condition | Action |
 |-----------|--------|
@@ -320,7 +320,7 @@ On the TextField's **On Submit** action (triggered when keyboard "done"/"→" is
 
 ## 9. Page Actions (On Page Load)
 
-**Menu:** Select page → Properties → Actions → On Page Load
+**Menu:** Select page -> Properties -> Actions -> On Page Load
 
 | Step | Action | Details |
 |------|--------|---------|
@@ -335,7 +335,7 @@ On TextField **On Change**, add a formatting step before updating `phone_input`:
 Strip all non-digits from raw input. If `length > 9`, truncate to 9. Then format display:
 
 ```
-771234567 → "77 123 45 67"
+771234567 -> "77 123 45 67"
 ```
 
 This is a display-only mask. The `phone_input` Page State variable stores only the raw 9 digits.
@@ -354,7 +354,7 @@ This is a display-only mask. The `phone_input` Page State variable stores only t
 
 ## 12. Dependencies
 
-**Menu:** Settings & Integrations → Custom Code → Dependencies → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Dependencies -> + Add
 
 | Package | Version |
 |---------|---------|
@@ -371,12 +371,12 @@ This is a display-only mask. The `phone_input` Page State variable stores only t
 | 3 | Enter "123" (<9 digits) | Type 3 digits | Button stays disabled, error shows |
 | 4 | Enter letters "abc" | Type letters | Stripped, nothing appears |
 | 5 | Paste phone number | Paste 771234567 | Strips non-digits, formats, validates |
-| 6 | Tap "Envoyer" | Valid phone → tap | Button disables, spinner appears, API called |
+| 6 | Tap "Envoyer" | Valid phone -> tap | Button disables, spinner appears, API called |
 | 7 | OTP request success (200) | Valid response | Navigates to OtpScreen with phone, masked_phone, cooldown_seconds |
 | 8 | Rate limited (429) | API returns 429 | Shows error, starts cooldown timer, button disabled |
 | 9 | Cooldown expires | Wait for timer | Timer hits 0, button re-enables, error clears |
-| 10 | Network error | Airplane mode → tap | Shows "Erreur réseau", button re-enables immediately |
-| 11 | Keyboard submit | Valid phone → tap "Done" | Same as button tap, triggers API call |
+| 10 | Network error | Airplane mode -> tap | Shows "Erreur réseau", button re-enables immediately |
+| 11 | Keyboard submit | Valid phone -> tap "Done" | Same as button tap, triggers API call |
 | 12 | Autofocus | Page loads | Phone input has focus, keyboard opens |
 | 13 | Phone keyboard type | Page loads | Keyboard shows numeric digits with phone layout |
 | 14 | Multi-tap prevention | Tap button rapidly | Only one API call (is_loading disables button) |

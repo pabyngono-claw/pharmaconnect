@@ -1,4 +1,4 @@
-# PharmaConnect — Splash Screen Build Guide
+# PharmaConnect -- Splash Screen Build Guide
 
 **FlutterFlow build instructions for Screen 1/21**
 Source of truth: `frontend/screens/01-splash-screen.md`
@@ -7,7 +7,7 @@ Source of truth: `frontend/screens/01-splash-screen.md`
 
 ## 1. App State Variables
 
-**Menu:** Settings & Integrations → App State → + Add
+**Menu:** Settings & Integrations -> App State -> + Add
 
 Create these 6 App State variables:
 
@@ -26,7 +26,7 @@ Create these 6 App State variables:
 
 ## 2. API Call Setup
 
-**Menu:** Settings & Integrations → API Calls → + Add API
+**Menu:** Settings & Integrations -> API Calls -> + Add API
 
 | Field | Value |
 |-------|-------|
@@ -37,7 +37,7 @@ Create these 6 App State variables:
 | **Headers** | `Content-Type: application/json` |
 | **Body** | `{ "refresh_token": "{{app_state.refresh_token}}" }` |
 
-**Variables tab** — define 2 response variables:
+**Variables tab** -- define 2 response variables:
 
 | Variable Name | Type | JSON Path |
 |---------------|------|-----------|
@@ -50,14 +50,14 @@ Create these 6 App State variables:
 
 ## 3. Custom Action: `checkAuthState`
 
-**Menu:** Settings & Integrations → Custom Code → Custom Actions → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Custom Actions -> + Add
 
 | Field | Value |
 |-------|-------|
 | **Name** | `checkAuthState` |
 | **Return Type** | `Map<String, dynamic>` |
 
-**Code** — paste exactly:
+**Code** -- paste exactly:
 
 ```dart
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -122,7 +122,7 @@ Future<Map<String, dynamic>> checkAuthState() async {
 
 ## 4. Page Setup
 
-**Menu:** Pages → + Add Page (or duplicate Blank)
+**Menu:** Pages -> + Add Page (or duplicate Blank)
 
 | Property | Value |
 |----------|-------|
@@ -170,26 +170,26 @@ Page (SplashScreen)
 
 ### Widget properties in detail
 
-**Page → Column** (root):
+**Page -> Column** (root):
 | Property | Value |
 |----------|-------|
 | Main Axis Alignment | center |
 | Cross Axis Alignment | center |
 
-**Column (logo block)** — child of root:
+**Column (logo block)** -- child of root:
 | Property | Value |
 |----------|-------|
 | Main Axis Alignment | center |
 | Cross Axis Alignment | center |
 
-**Icon** — child of logo block:
+**Icon** -- child of logo block:
 | Property | Value |
 |----------|-------|
 | Icon | `local_hospital` (or upload custom SVG: cross-green-and-crescent) |
 | Size | 64 |
 | Color | `#0F5B6E` |
 
-**Text (PharmaConnect)** — child of logo block:
+**Text (PharmaConnect)** -- child of logo block:
 | Property | Value |
 |----------|-------|
 | Value | `PharmaConnect` |
@@ -198,7 +198,7 @@ Page (SplashScreen)
 | Text Color | `#0F5B6E` |
 | Text Align | center |
 
-**SizedBox (32px)** — between logo block and spinner.
+**SizedBox (32px)** -- between logo block and spinner.
 
 **CircularProgressIndicator**:
 | Property | Value |
@@ -208,7 +208,7 @@ Page (SplashScreen)
 | Stroke Width | 4 (default) |
 | Color | `#0F5B6E` |
 
-**SizedBox (16px)** — between spinner and "Chargement...".
+**SizedBox (16px)** -- between spinner and "Chargement...".
 
 **Text (Chargement...)**:
 | Property | Value |
@@ -224,7 +224,7 @@ Page (SplashScreen)
 
 This is the core logic. Configure these actions on the page's **On Page Load** trigger.
 
-**Menu:** Select the page → Properties panel (right side) → **Actions** → On Page Load → + Add
+**Menu:** Select the page -> Properties panel (right side) -> **Actions** -> On Page Load -> + Add
 
 ### Action flow:
 
@@ -248,19 +248,19 @@ On Page Load
   │                               │   │       └── is_logged_in = true
   │                               │   └── Sub-step 3b: Conditional (role check)
   │                               │           ├── Condition: `auth_result['role'] == 'pharmacy'`
-  │                               │           ├── TRUE → Navigate To → PharmacyDashboardScreen
-  │                               │           └── FALSE → Navigate To → HomeScreen
+  │                               │           ├── TRUE -> Navigate To -> PharmacyDashboardScreen
+  │                               │           └── FALSE -> Navigate To -> HomeScreen
   │                               └── FALSE:
   │                                   └── Sub-step 3c: Set App State
   │                                   │       └── is_logged_in = false
-  │                                   └── Sub-step 3d: Navigate To → LoginScreen
+  │                                   └── Sub-step 3d: Navigate To -> LoginScreen
 ```
 
 ### Detailed action configuration:
 
 #### Step 1: Timer
 
-**Menu:** Click "+ Add Action" → **Timer** → **Wait (delay)**
+**Menu:** Click "+ Add Action" -> **Timer** -> **Wait (delay)**
 
 | Property | Value |
 |----------|-------|
@@ -269,16 +269,16 @@ On Page Load
 
 #### Step 2: Call Custom Action
 
-Add after the Timer. **Menu:** "+ Add Action" → **Custom Action** → `checkAuthState`
+Add after the Timer. **Menu:** "+ Add Action" -> **Custom Action** -> `checkAuthState`
 
 | Property | Value |
 |----------|-------|
 | Custom Action | `checkAuthState` |
-| Store In | `auth_result` (Page State variable — create it first) |
+| Store In | `auth_result` (Page State variable -- create it first) |
 
 #### Step 3: Conditional (auth check)
 
-Add after the Custom Action. **Menu:** "+ Add Action" → **Conditional**
+Add after the Custom Action. **Menu:** "+ Add Action" -> **Conditional**
 
 | Property | Value |
 |----------|-------|
@@ -302,14 +302,14 @@ For each variable, add a **Set App State Variable** action:
 |----------|-------|
 | Condition | `auth_result['role'] == 'pharmacy'` |
 
-**TRUE branch** → Navigate To → `PharmacyDashboardScreen`
+**TRUE branch** -> Navigate To -> `PharmacyDashboardScreen`
 | Property | Value |
 |----------|-------|
 | Action | Navigate To |
 | Page | `PharmacyDashboardScreen` |
 | Type | Replace (clear navigation stack) |
 
-**FALSE branch** → Navigate To → `HomeScreen`
+**FALSE branch** -> Navigate To -> `HomeScreen`
 | Property | Value |
 |----------|-------|
 | Action | Navigate To |
@@ -334,7 +334,7 @@ For each variable, add a **Set App State Variable** action:
 
 ## 7. Page State Variable
 
-**Menu:** Select page → Page State (bottom panel) → + Add
+**Menu:** Select page -> Page State (bottom panel) -> + Add
 
 | Name | Type | Default |
 |------|------|---------|
@@ -348,7 +348,7 @@ Since FlutterFlow cannot pre-type a Map, set it as **Custom Data Type** and leav
 
 Set `SplashScreen` as the **Home Page** (first page shown on app launch).
 
-**Menu:** Settings & Integrations → App Info → General → Home Page
+**Menu:** Settings & Integrations -> App Info -> General -> Home Page
 
 | Property | Value |
 |----------|-------|
@@ -372,7 +372,7 @@ No additional setup needed.
 
 Before the app can build, add these packages:
 
-**Menu:** Settings & Integrations → Custom Code → Dependencies → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Dependencies -> + Add
 
 | Package | Version |
 |---------|---------|
@@ -387,13 +387,13 @@ Execute each scenario in FlutterFlow's **Run mode** (not Preview mode, since sec
 
 | # | Scenario | Steps | Expected Result |
 |---|----------|-------|-----------------|
-| 1 | First launch, no tokens | Install app, open | Splash → spinner → routes to LoginScreen |
-| 2 | Valid refresh token | Login, kill app, reopen | Splash → spinner → routes to HomeScreen |
-| 3 | Expired refresh token | Wait 30 days or clear storage, reopen | Splash → spinner → routes to LoginScreen |
-| 4 | Pharmacy role token | Login as pharmacy staff, kill app, reopen | Splash → spinner → routes to PharmacyDashboardScreen |
-| 5 | Network error | Airplane mode, reopen | Splash → spinner → routes to LoginScreen (fallback) |
+| 1 | First launch, no tokens | Install app, open | Splash -> spinner -> routes to LoginScreen |
+| 2 | Valid refresh token | Login, kill app, reopen | Splash -> spinner -> routes to HomeScreen |
+| 3 | Expired refresh token | Wait 30 days or clear storage, reopen | Splash -> spinner -> routes to LoginScreen |
+| 4 | Pharmacy role token | Login as pharmacy staff, kill app, reopen | Splash -> spinner -> routes to PharmacyDashboardScreen |
+| 5 | Network error | Airplane mode, reopen | Splash -> spinner -> routes to LoginScreen (fallback) |
 | 6 | Timer visible | Fresh install | Logo + spinner visible for minimum 500ms before navigation |
-| 7 | No user interaction | All scenarios | No buttons, no taps accepted — purely passive screen |
+| 7 | No user interaction | All scenarios | No buttons, no taps accepted -- purely passive screen |
 
 ---
 
@@ -406,7 +406,7 @@ After building, confirm:
 - [ ] Custom Action `checkAuthState` compiles without errors
 - [ ] Dependencies `flutter_secure_storage` and `http` added
 - [ ] Page State variable `auth_result` exists
-- [ ] On Page Load has: Timer(500ms) → checkAuthState → Conditional → Navigate
+- [ ] On Page Load has: Timer(500ms) -> checkAuthState -> Conditional -> Navigate
 - [ ] SplashScreen is set as Home Page
-- [ ] Widget tree matches spec (Icon → Text → Spacer → Spinner → Spacer → Text)
+- [ ] Widget tree matches spec (Icon -> Text -> Spacer -> Spinner -> Spacer -> Text)
 - [ ] All 7 test scenarios pass on device/emulator

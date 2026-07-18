@@ -1,4 +1,4 @@
-# PharmaConnect — OTP Verification Screen Build Guide
+# PharmaConnect -- OTP Verification Screen Build Guide
 
 **FlutterFlow build instructions for Screen 3/21**
 Source of truth: `frontend/screens/03-otp-verification-screen.md`
@@ -7,7 +7,7 @@ Source of truth: `frontend/screens/03-otp-verification-screen.md`
 
 ## 1. App State Variables
 
-**Menu:** Settings & Integrations → App State → + Add (if not already created from Login)
+**Menu:** Settings & Integrations -> App State -> + Add (if not already created from Login)
 
 | # | Name | Type | Default | Notes |
 |---|------|------|---------|-------|
@@ -22,7 +22,7 @@ Source of truth: `frontend/screens/03-otp-verification-screen.md`
 
 ## 2. Page State Variables
 
-**Menu:** Select OtpScreen page → Page State (bottom panel) → + Add
+**Menu:** Select OtpScreen page -> Page State (bottom panel) -> + Add
 
 | # | Name | Type | Default | Notes |
 |---|------|------|---------|-------|
@@ -36,7 +36,7 @@ Source of truth: `frontend/screens/03-otp-verification-screen.md`
 
 ## 3. Custom Functions
 
-**Menu:** Settings & Integrations → Custom Code → Custom Functions → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Custom Functions -> + Add
 
 ### 3a. `buildCodeString`
 
@@ -105,9 +105,9 @@ int extractAttemptsLeft(String errorBody) {
 
 ---
 
-## 4. API Call Setup — POST /auth/otp/verify
+## 4. API Call Setup -- POST /auth/otp/verify
 
-**Menu:** Settings & Integrations → API Calls → + Add API
+**Menu:** Settings & Integrations -> API Calls -> + Add API
 
 | Field | Value |
 |-------|-------|
@@ -118,7 +118,7 @@ int extractAttemptsLeft(String errorBody) {
 | **Headers** | `Content-Type: application/json` |
 | **Body** | `{ "phone": "{{phone_number}}", "code": "{{code}}", "purpose": "login" }` |
 
-**Variables tab** — define response variables:
+**Variables tab** -- define response variables:
 
 | Variable Name | Type | JSON Path |
 |---------------|------|-----------|
@@ -129,9 +129,9 @@ int extractAttemptsLeft(String errorBody) {
 
 ---
 
-## 5. API Call Setup — POST /auth/otp/request (Resend)
+## 5. API Call Setup -- POST /auth/otp/request (Resend)
 
-**Menu:** Settings & Integrations → API Calls → + Add API
+**Menu:** Settings & Integrations -> API Calls -> + Add API
 
 | Field | Value |
 |-------|-------|
@@ -152,7 +152,7 @@ int extractAttemptsLeft(String errorBody) {
 
 ## 6. Page Setup
 
-**Menu:** Pages → + Add Page → Blank
+**Menu:** Pages -> + Add Page -> Blank
 
 | Property | Value |
 |----------|-------|
@@ -176,7 +176,7 @@ Page (OtpScreen)
         │   ├── IconButton
         │   │   ├── Icon: arrow_back
         │   │   ├── Color: #0F5B6E
-        │   │   └── On Tap: Navigate To → LoginScreen (type: Push, clear stack)
+        │   │   └── On Tap: Navigate To -> LoginScreen (type: Push, clear stack)
         │   │       └── Also: Clear App State phone_number, masked_phone
 
         ├── SizedBox (height: 24)
@@ -233,30 +233,30 @@ Page (OtpScreen)
         │   │           1. If text.length == 1:
         │   │              a. Set Page State `d1` = text
         │   │              b. Focus next field (otp_input_2)
-        │   │              c. Check all 6 filled → auto-submit
+        │   │              c. Check all 6 filled -> auto-submit
         │   │           2. Else (text.length == 0, Backspace):
         │   │              a. Set Page State `d1` = ""
         │   │              b. Focus previous field (if not first)
         │   │
-        │   │   └── TextField (otp_input_2) — same structure
+        │   │   └── TextField (otp_input_2) -- same structure
         │   │       ├── On Change:
-        │   │       │   1. If text.length == 1 → focus otp_input_3, check auto-submit
-        │   │       │   2. If text.length == 0 → focus otp_input_1
+        │   │       │   1. If text.length == 1 -> focus otp_input_3, check auto-submit
+        │   │       │   2. If text.length == 0 -> focus otp_input_1
         │   │
-        │   │   └── TextField (otp_input_3) — same structure
+        │   │   └── TextField (otp_input_3) -- same structure
         │   │       ├── On Change:
-        │   │       │   1. If text.length == 1 → focus otp_input_4, check auto-submit
-        │   │       │   2. If text.length == 0 → focus otp_input_2
+        │   │       │   1. If text.length == 1 -> focus otp_input_4, check auto-submit
+        │   │       │   2. If text.length == 0 -> focus otp_input_2
         │   │
-        │   │   └── TextField (otp_input_4) — same structure
+        │   │   └── TextField (otp_input_4) -- same structure
         │   │       ├── On Change:
-        │   │       │   1. If text.length == 1 → focus otp_input_5, check auto-submit
-        │   │       │   2. If text.length == 0 → focus otp_input_3
+        │   │       │   1. If text.length == 1 -> focus otp_input_5, check auto-submit
+        │   │       │   2. If text.length == 0 -> focus otp_input_3
         │   │
-        │   │   └── TextField (otp_input_5) — same structure
+        │   │   └── TextField (otp_input_5) -- same structure
         │   │       ├── On Change:
-        │   │       │   1. If text.length == 1 → focus otp_input_6, check auto-submit
-        │   │       │   2. If text.length == 0 → focus otp_input_4
+        │   │       │   1. If text.length == 1 -> focus otp_input_6, check auto-submit
+        │   │       │   2. If text.length == 0 -> focus otp_input_4
         │   │
         │   │   └── TextField (otp_input_6)
         │   │       ├── Width: 48, Height: 56
@@ -270,8 +270,8 @@ Page (OtpScreen)
         │   │       └── On Change:
         │   │           1. If text.length == 1:
         │   │              a. Set Page State `d6` = text
-        │   │              b. Check all 6 filled → auto-submit
-        │   │           2. If text.length == 0 → focus otp_input_5
+        │   │              b. Check all 6 filled -> auto-submit
+        │   │           2. If text.length == 0 -> focus otp_input_5
 
         ├── SizedBox (height: 4)
 
@@ -295,7 +295,7 @@ Page (OtpScreen)
         │   ├── When loading: Show CircularProgressIndicator inside button
         │   │   └── Size: 20, Color: #FFFFFF
         │   └── On Tap:
-        │       1. If `is_loading == true` → stop (guard)
+        │       1. If `is_loading == true` -> stop (guard)
         │       2. Set `is_loading = true`
         │       3. Set `code = buildCodeString(d1, d2, d3, d4, d5, d6)`
         │       4. Call API `auth_otp_verify` with body `{"phone": phone_number, "code": code, "purpose": "login"}`
@@ -303,17 +303,17 @@ Page (OtpScreen)
         │          │   1. Set App State `access_token = api_access_token`
         │          │   2. Set App State `refresh_token = api_refresh_token`
         │          │   3. Set App State `user_id = api_user_id`
-        │          │   4. Call Custom Function `extractRoleFromToken(api_access_token)` → store as `role`
+        │          │   4. Call Custom Function `extractRoleFromToken(api_access_token)` -> store as `role`
         │          │   5. Set App State `user_role = role`
         │          │   6. Store tokens in Secure Storage:
         │          │      ├── Key: `access_token`, Value: `api_access_token`
         │          │      ├── Key: `refresh_token`, Value: `api_refresh_token`
         │          │      └── Key: `user_id`, Value: `api_user_id`
         │          │   7. If `role == "patient"`:
-        │          │      ├── Navigate To → HomeScreen (type: Push, clear stack)
+        │          │      ├── Navigate To -> HomeScreen (type: Push, clear stack)
         │          │      └── Pass: access_token, refresh_token, user_id
         │          │   8. If `role == "pharmacy"`:
-        │          │      ├── Navigate To → PharmacyDashboardScreen (type: Push, clear stack)
+        │          │      ├── Navigate To -> PharmacyDashboardScreen (type: Push, clear stack)
         │          │      └── Pass: access_token, refresh_token, user_id
         │          │   9. Set `is_loading = false`
         │          │
@@ -325,7 +325,7 @@ Page (OtpScreen)
         │          │   5. Decrement `attempts_left` by 1 (or set from `api_attempts_left`)
         │          │   6. If `attempts_left == 0`:
         │          │      ├── Show AlertDialog: "Trop de tentatives. Veuillez redemander un code."
-        │          │      └── Navigate To → LoginScreen (type: Push, clear stack)
+        │          │      └── Navigate To -> LoginScreen (type: Push, clear stack)
         │          │         └── Clear App State: access_token, refresh_token, user_id, phone_number
         │          │
         │          ├── Rate Limited (429):
@@ -377,7 +377,7 @@ Page (OtpScreen)
 
 ---
 
-## 8. OTP Input Behaviour — Detailed Implementation
+## 8. OTP Input Behaviour -- Detailed Implementation
 
 ### 8a. Auto-advance
 
@@ -386,7 +386,7 @@ On each TextField's **On Change** action (when new character entered):
 1. Check `widget.text.length == 1` (new digit)
 2. Update corresponding Page State variable (d1-d6)
 3. Call `FocusScope.of(context).requestFocus(nextFocusNode)` to move to next TextField
-4. After updating field 6, check if all 6 digits are filled → trigger auto-submit
+4. After updating field 6, check if all 6 digits are filled -> trigger auto-submit
 
 ### 8b. Backspace Handling
 
@@ -407,7 +407,7 @@ On the first OTP TextField (otp_input_1), add an **On Paste** handler:
 4. If valid: split into 6 chars, set d1-d6, fill all TextField controllers, and auto-submit
 5. If invalid (length != 6): ignore paste, keep fields empty
 
-**Menu:** Select otp_input_1 → Properties → On Paste (requires custom code wrapper or use a paste-detection widget)
+**Menu:** Select otp_input_1 -> Properties -> On Paste (requires custom code wrapper or use a paste-detection widget)
 
 Alternative: Add a hidden TextField that accepts multiline paste, then distribute its value across the 6 visible inputs.
 
@@ -420,7 +420,7 @@ After all 6 digits are entered (either by typing, paste, or backspace-navigation
 3. If `code.length == 6 && !is_loading`:
    - Execute the same verify action chain as the "Vérifier" button On Tap
 
-### 8e. Visual Feedback — Border Color
+### 8e. Visual Feedback -- Border Color
 
 On each TextField, configure **OutlineInputBorder**:
 
@@ -436,7 +436,7 @@ On each TextField, configure **OutlineInputBorder**:
 
 ## 9. Page Actions (On Page Load)
 
-**Menu:** Select page → Properties → Actions → On Page Load
+**Menu:** Select page -> Properties -> Actions -> On Page Load
 
 | Step | Action | Details |
 |------|--------|---------|
@@ -461,9 +461,9 @@ In FlutterFlow: Use **Timer Widget** (Community) or create a **Custom Action** f
 
 ---
 
-## 10. Custom Action — Resend Timer
+## 10. Custom Action -- Resend Timer
 
-**Menu:** Settings & Integrations → Custom Code → Custom Actions → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Custom Actions -> + Add
 
 | Property | Value |
 |----------|-------|
@@ -497,13 +497,13 @@ Future<void> startResendCooldown(int initialSeconds) async {
 
 ## 11. Secure Storage Setup
 
-**Menu:** Settings & Integrations → Custom Code → Dependencies → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Dependencies -> + Add
 
 | Package | Version |
 |---------|---------|
 | `flutter_secure_storage` | `^9.0.0` |
 
-**Menu:** Settings & Integrations → Custom Code → Custom Actions → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Custom Actions -> + Add
 
 ### 11a. `storeSecureTokens`
 
@@ -566,7 +566,7 @@ Future<void> clearSecureTokens() async {
 | ← Back tap | LoginScreen | None | Push (clear stack) |
 | Verify success + role=patient | HomeScreen | access_token, refresh_token, user_id | Push (clear stack) |
 | Verify success + role=pharmacy | PharmacyDashboardScreen | access_token, refresh_token, user_id | Push (clear stack) |
-| 5 failed attempts | LoginScreen | None | Push (clear stack) — clear tokens |
+| 5 failed attempts | LoginScreen | None | Push (clear stack) -- clear tokens |
 
 ---
 
@@ -592,7 +592,7 @@ The shared `is_loading` guard prevents concurrent API calls for both verify and 
 | User pastes 6-digit code | All 6 fields filled, auto-submit triggered |
 | User pastes code != 6 digits | Paste ignored, fields remain empty |
 | Rate limit on resend | Show "Trop de tentatives. Réessayez dans X minutes." |
-| App killed during verify | Next splash — refresh token not stored → redirect to LoginScreen |
+| App killed during verify | Next splash -- refresh token not stored -> redirect to LoginScreen |
 | Multi-tap "Vérifier" | Button disabled immediately, single API call only |
 | User taps ← Back | Navigate to LoginScreen, no persistent OTP state |
 | Timer tick during loading | Cooldown countdown continues in background |
@@ -602,7 +602,7 @@ The shared `is_loading` guard prevents concurrent API calls for both verify and 
 
 ## 15. Dependencies
 
-**Menu:** Settings & Integrations → Custom Code → Dependencies → + Add
+**Menu:** Settings & Integrations -> Custom Code -> Dependencies -> + Add
 
 | Package | Version | Purpose |
 |---------|---------|---------|
@@ -625,23 +625,23 @@ The shared `is_loading` guard prevents concurrent API calls for both verify and 
 | 8 | Auto-submit on 6th digit | Type digits 1-6 quickly | Verify API called automatically on 6th entry |
 | 9 | Auto-submit on paste | Paste valid 6-digit code | Verify API called automatically |
 | 10 | Invalid code (401) | Submit wrong code | Red error shown, inputs cleared, focus field 1 |
-| 11 | Attempts countdown | Submit wrong code 5 times | On 5th failure → AlertDialog → redirect to Login |
+| 11 | Attempts countdown | Submit wrong code 5 times | On 5th failure -> AlertDialog -> redirect to Login |
 | 12 | Rate limited (429) on verify | Submit codes rapidly | Shows retry message, cooldown starts |
-| 13 | Network error | Airplane mode → tap Vérifier | Shows "Erreur réseau", inputs preserved |
+| 13 | Network error | Airplane mode -> tap Vérifier | Shows "Erreur réseau", inputs preserved |
 | 14 | Resend cooldown UI | Navigate to screen | Shows "Renvoyer dans 30s", grey, not tappable |
 | 15 | Resend cooldown expires | Wait 30 seconds | Shows "Renvoyer le code", blue, tappable |
 | 16 | Tap "Renvoyer" | Tap resend link | Clears inputs, calls OTP request, resets cooldown |
-| 17 | Verify success → patient | Submit valid code, role=patient | Tokens stored in App State + Secure Storage, navigates to HomeScreen |
-| 18 | Verify success → pharmacy | Submit valid code, role=pharmacy | Tokens stored, navigates to PharmacyDashboardScreen |
+| 17 | Verify success -> patient | Submit valid code, role=patient | Tokens stored in App State + Secure Storage, navigates to HomeScreen |
+| 18 | Verify success -> pharmacy | Submit valid code, role=pharmacy | Tokens stored, navigates to PharmacyDashboardScreen |
 | 19 | Tokens in Secure Storage | After verify success | access_token, refresh_token, user_id all persisted |
 | 20 | ← Back to Login | Tap back arrow | Navigates to LoginScreen, OTP state discarded |
 | 21 | Multi-tap prevention | Tap Vérifier rapidly | Single API call, button disabled by is_loading |
 | 22 | is_loading shared guard | Tap Vérifier, then tap Renvoyer | Renvoyer disabled while verify in progress |
-| 23 | Visual feedback — empty | Initial state | All inputs grey border (#D1D5DB) |
-| 24 | Visual feedback — focused | Tap an input field | Border turns teal (#0F5B6E) |
-| 25 | Visual feedback — filled | Type a digit | Border turns green (#10B981) |
-| 26 | Visual feedback — error state | Submit invalid code | Input borders turn red (#DC2626) |
+| 23 | Visual feedback -- empty | Initial state | All inputs grey border (#D1D5DB) |
+| 24 | Visual feedback -- focused | Tap an input field | Border turns teal (#0F5B6E) |
+| 25 | Visual feedback -- filled | Type a digit | Border turns green (#10B981) |
+| 26 | Visual feedback -- error state | Submit invalid code | Input borders turn red (#DC2626) |
 | 27 | Keyboard type | Tap any input | Numeric keypad opens |
-| 28 | Error cleared on new input | Error shown → type new digit | Error disappears |
+| 28 | Error cleared on new input | Error shown -> type new digit | Error disappears |
 | 29 | Page load timer start | Screen opens | Timer starts at 30, counts down every second |
 | 30 | Timer persists on error | Submit wrong code | Timer continues counting, resend still available |
